@@ -91,6 +91,11 @@ public class GameOfThrone {
 			if (status == 0) {
 				d.moveForward(team);
 				int nextY = d.willMoveAside(team);
+				if (nextY>size) {
+					nextY = nextY - size;
+				}if (nextY<0) {
+					nextY = size + nextY;
+				}
 				 status = isOccupied(d.getX(), nextY, dragons, soldiers, team);
 				 if (status == 0) {
 					 d.moveAside(team, nextY);

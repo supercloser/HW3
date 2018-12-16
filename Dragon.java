@@ -7,13 +7,7 @@ public class Dragon {
 	private String team;
 	private boolean alive;
 	private String name;
-	private int strength = 5;
-	public int getStrength() {
-		return strength;
-	}
-	public void setStrength(int strength) {
-		this.strength = strength;
-	}
+	
 	public Dragon(int x, int y, String team, boolean alive, String name) {
 		this.x = x;
 		this.y = y;
@@ -25,10 +19,22 @@ public class Dragon {
 		int nextX;
 		if (team.equals("red")) {
 		    nextX = this.x + 1;
+		    if (nextX > GameOfThrone.size) {
+		    	nextX = nextX - GameOfThrone.size;
+		    }
+		    if(nextX<0) {
+		    	nextX = GameOfThrone.size + nextX;
+		    }
 		
 	   
 		}else {
 			nextX = this.x - 1;
+			 if (nextX > GameOfThrone.size) {
+			    	nextX = nextX - GameOfThrone.size;
+			    }
+			    if(nextX<0) {
+			    	nextX = GameOfThrone.size + nextX;
+			    }
 		}
 	    
 		int willForward = nextX;
