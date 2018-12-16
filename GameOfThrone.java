@@ -36,7 +36,8 @@ public class GameOfThrone {
 		printBoard(board);
 		//ARMY CREATION ENDS HERE^^^^
 		advenceStep();
-		
+		// need to create a method that takes the objects and prints a board of them (the problem with the current one is
+		// that it works with strings, i need it to work with objects (a bit more difficult but we will get over it ;)
 	}
 	public static String[][] GameOfThrone(int size) {
 		String[][] firstBoard = new String[size][size];
@@ -48,16 +49,6 @@ public class GameOfThrone {
 		return firstBoard;
 		
 	}
-	public static void copy (String[][] original, String[][] paste){
-		for(int x=0; x<original.length;x++) {
-			for(int y=0; y<original.length;y++) {
-				paste[x][y] = original[x][y];
-			}
-		}
-		
-	}
-
-
 	public String[][] getBoard(String[][] oldBoard) { // copy of the board given and returns new one
 		String[][] newBoard = new String[oldBoard.length][oldBoard.length];
 		for(int x=0; x<oldBoard.length;x++) {
@@ -86,6 +77,9 @@ public class GameOfThrone {
 	
 	public static void moveDragon(String team) {
 		for (Dragon d : dragons) {
+			if (d == null) {
+				continue;
+			}
 			if (d.getTeam().equals(team)) {
 			int status = isOccupied(d.getX(), d.willMoveForward(team), dragons, soldiers, team);
 			if (status == 0) {
@@ -108,12 +102,18 @@ public class GameOfThrone {
 					 }else if(status == 2) {
 						 d.moveForward(team);
 						 for (Soldier s : soldiers) {
+							 if (s == null) {
+								 continue;
+							 }
 							 if (s.getX() == d.getX() && s.getY() == d.getY()) {
 								 s.setAlive(false);
 							 }
 						 }
 					 }else if(status == 3) {
 						 for (Dragon d2 : dragons) {
+							 if (d2 == null) {
+								 continue;
+							 }
 							 if(d2.getX() == d.getX() && d2.getY() == d.getY()) {
 								 d2.setAlive(false);
 								 d.setAlive(false);
@@ -125,12 +125,18 @@ public class GameOfThrone {
 				 }else if (status == 2) {
 					 d.moveAside(team, nextY);
 					 for (Soldier s : soldiers) {
+						 if (s == null) {
+							 continue;
+						 }
 						 if (s.getX() == d.getX() && s.getY() == d.getY()) {
 							 s.setAlive(false);
 						 }
 					 }
 				 }else if(status == 3) {
 					 for (Dragon d2 : dragons) {
+						 if (d2 == null) {
+							 continue;
+						 }
 						 if(d2.getX() == d.getX() && d2.getY() == d.getY()) {
 							 d2.setAlive(false);
 							 d.setAlive(false);
@@ -144,6 +150,9 @@ public class GameOfThrone {
 			if (status == 2) {
 				 d.moveForward(team);
 				 for (Soldier s : soldiers) {
+					 if (s == null) {
+						 continue;
+					 }
 					 if (s.getX() == d.getX() && s.getY() == d.getY()) {
 						 s.setAlive(false);
 					 }
@@ -151,6 +160,9 @@ public class GameOfThrone {
 			}
 			if (status == 3) {
 				for (Dragon d2 : dragons) {
+					if (d2 == null) {
+						continue;
+					}
 					 if(d2.getX() == d.getX() && d2.getY() == d.getY()) {
 						 d2.setAlive(false);
 						 d.setAlive(false);
@@ -162,6 +174,9 @@ public class GameOfThrone {
 	}
 	public static void moveSoldier (String team) {
 		for (Soldier s : soldiers) {
+			if (s == null) {
+				continue;
+			}
 			if (s.getTeam().equals(team)) {
 				int status = isOccupied(s.whereToMove(team), s.getY(), dragons, soldiers, team);
 				if (status == 0) {
@@ -170,6 +185,9 @@ public class GameOfThrone {
 					continue;
 				}else if (status == 2) {
 					for (Soldier s2 : soldiers) {
+						if (s2 == null) {
+							continue;
+						}
 						 if (s2.getX() == s.getX() && s2.getY() == s.getY()) {
 							 s.setAlive(false);
 							 s2.setAlive(false);
@@ -183,7 +201,7 @@ public class GameOfThrone {
 	}
 	public static void advenceStep() { // first red dragons, then blue dragons, then red soldiers, then blue soldiers
 		int counter =0;
-		while (gameOver = false) {
+		while (isGameOver() == false) {
 			
 			checkForWinner();
 			moveDragon("red");
@@ -238,6 +256,9 @@ public class GameOfThrone {
 		int byEnemyDragon = 3;
 		//--------------------------
 		for (Dragon d: dragons) {
+			if (d == null) {
+				return free;
+			}
 			if (d.getX() == cellX && d.getY() == cellY) {
 				if (d.getTeam().equals(team)) {
 					return byTeam;
@@ -247,6 +268,9 @@ public class GameOfThrone {
 			}
 		}
 		for (Soldier s: soldiers) {
+			if (s == null) {
+				return free;
+			}
 			if (s.getX() == cellX && s.getY() == cellY) {
 				if (s.getTeam().equals(team)) {
 					return byTeam;
@@ -267,6 +291,9 @@ public class GameOfThrone {
 	}
 	public static void checkForWinner () {
 		for (Soldier s: soldiers) {
+			if (s == null) {
+				continue;
+			}
 			if (s.getTeam().equals("red") && s.getX() == (size-1)) {
 				System.out.println("Red won! GAME OVER!");
 				setGameOver(true);
