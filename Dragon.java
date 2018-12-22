@@ -7,7 +7,16 @@ public class Dragon {
 	private String team;
 	private boolean alive;
 	private String name;
+	private int strength =2;
+	public static int nextX =0;
+	public static int nextY =0;
 	
+	public int getStrength() {
+		return strength;
+	}
+	public void setStrength(int strength) {
+		this.strength = strength;
+	}
 	public Dragon(int x, int y, String team, boolean alive, String name) {
 		this.x = x;
 		this.y = y;
@@ -16,25 +25,15 @@ public class Dragon {
 		this.name = name;
 	}
 	public int willMoveForward (String team) {
-		int nextX;
+		
 		if (team.equals("red")) {
 		    nextX = this.x + 1;
-		    if (nextX > GameOfThrone.size) {
-		    	nextX = nextX - GameOfThrone.size;
-		    }
-		    if(nextX<0) {
-		    	nextX = GameOfThrone.size + nextX;
-		    }
+		    fixBounds();
 		
 	   
 		}else {
 			nextX = this.x - 1;
-			 if (nextX > GameOfThrone.size) {
-			    	nextX = nextX - GameOfThrone.size;
-			    }
-			    if(nextX<0) {
-			    	nextX = GameOfThrone.size + nextX;
-			    }
+			fixBounds();
 		}
 	    
 		int willForward = nextX;
@@ -42,22 +41,26 @@ public class Dragon {
 	}//================================================
 	public int willMoveAside (String team) {
 		Random rand = new Random();
-		int nextY = 0;
+		
 		if (team.equals("red")) {
 		    boolean nextYbool = rand.nextBoolean();
-		    if(nextYbool) {
+		    if(nextYbool == false) {
 		    	nextY = this.y +1; //move left
+		    	fixBounds();
 		    }else {
 		    	nextY = this.y -1; //move right
+		    	fixBounds();
 		    }
 		
 	   
 		}else {
 			 boolean nextYbool = rand.nextBoolean();
-			    if(nextYbool) {
+			    if(nextYbool == false) {
 			    	nextY = this.y -1; //move left
+			    	fixBounds();
 			    }else {
 			    	nextY = this.y +1; //move right
+			    	fixBounds();
 			    }
 		}
 	    
@@ -71,12 +74,42 @@ public class Dragon {
 			this.x = x-1;
 		}
 	}
-	public void moveAside (String team, int nextY) {
+	public void moveAside () {
 		this.y =nextY;
 		
 	}
+	public void fixBounds () {
+		if (nextX > GameOfThrone.size) {
+	    	nextX = nextX - GameOfThrone.size;
+	    }
+	    if(nextX<0) {
+	    	nextX = GameOfThrone.size + nextX;
+	    }
+	    if (nextY>GameOfThrone.size) {
+			nextY = nextY - GameOfThrone.size;
+		}if (nextY<0) {
+			nextY = GameOfThrone.size + nextY;
+		}
+	    
+	}
 	
-	
+	/*public int stepForward (int x, int y, String team) {
+		// print ("+stepForward")
+		int status = GameOfThrone.isOccupied(x, y, team);
+		switch (status) {
+		case 0: 
+			moveForward(team);
+			return 0;
+		case 1: 
+			return (-1);
+		case 2:
+			moveForward(team);
+			return (-1);
+		case 3:
+			return (-1);
+		}
+		// print ("-stepForward")
+	}*/
 	
 	
 	

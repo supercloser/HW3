@@ -46,6 +46,10 @@ public class Soldier {
 		}
 	}
 	//^^^^^^^^^^^^^^^^^^ End of Move ^^^^^^^^^^^^^^^^^^^^^^
+	public void dontMove () {
+		this.x = x;
+		this.y = y;
+	}
 	public int getX() {
 		return x;
 	}
